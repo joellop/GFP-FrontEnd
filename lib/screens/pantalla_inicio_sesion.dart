@@ -34,7 +34,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
 
     final RespuestaAPI<UsuarioModelo> respuesta =
         await _apiService.iniciarSesion(usuario);
-        
+
     if (!mounted) return;
 
     setState(() => _cargando = false);
@@ -69,7 +69,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text("Iniciar Sesión",
                     style: TextStyle(
@@ -77,23 +77,40 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                       fontWeight: FontWeight.bold,
                     )),
                 const SizedBox(height: 20),
-                CampoTextoCustomizable(
-                  controller: _nombreController,
-                  hintText: "Usuario",
-                  prefixIcon: Icons.person,
-                  validator: (value) =>
+                CampoTextoConIcono(
+                  controlador: _nombreController,
+                  texto: "Usuario",
+                  icono: Icons.person,
+                  validacion: (value) =>
                       value!.isEmpty ? "Ingrese su usuario" : null,
                 ),
-                const SizedBox(height: 15),
-                CampoTextoCustomizable(
-                  controller: _contrasenaController,
-                  hintText: "Contraseña",
-                  prefixIcon: Icons.lock,
-                  obscureText: true,
-                  validator: (value) =>
-                      value!.length < 6 ? "Mínimo 6 caracteres" : null,
+                const SizedBox(height: 30),
+                CampoTextoConIcono(
+                  controlador: _contrasenaController,
+                  texto: "Contraseña",
+                  icono: Icons.lock,
+                  esContrasena: true,
+                  validacion: (value) =>
+                      value!.isEmpty ? "Ingrese su contras" : null,
                 ),
-                const SizedBox(height: 25),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PantallaInicio()),
+                      );
+                    },
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: const Text("¿Crear usuario?",
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              decorationColor: ColorAplicacion.blanco,
+                              fontStyle: FontStyle.italic ,
+                              
+                            )))),
+                const SizedBox(height: 40),
                 _cargando
                     ? const Center(
                         child: CircularProgressIndicator(
