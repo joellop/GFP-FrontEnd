@@ -13,13 +13,13 @@ class AutenticacionService {
     ),
   );
 
-
+///Inicio de sesion
 Future<RespuestaAPI<UsuarioModelo>> iniciarSesion(UsuarioModelo usuario) async {
     try {
       final response = await _dio.post(
         "/autenticacion",
         data: usuario.toJson(),
-      );
+      ); 
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
         (data) => UsuarioModelo.fromJson(data),
