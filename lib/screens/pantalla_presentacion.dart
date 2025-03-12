@@ -6,10 +6,10 @@ class PantallaPresentacion extends StatefulWidget {
   const PantallaPresentacion({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<PantallaPresentacion> {
+class SplashScreenState extends State<PantallaPresentacion> {
   @override
   void initState() {
     super.initState();
