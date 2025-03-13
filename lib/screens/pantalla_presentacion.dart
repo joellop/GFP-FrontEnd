@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'pantalla_inicio_sesion.dart';
+import 'sesion/pantalla_inicio_sesion.dart';
 
 class PantallaPresentacion extends StatefulWidget {
   const PantallaPresentacion({super.key});

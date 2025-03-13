@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../theme/paleta_colores.dart';
-import '../widgets/campo_texto_customizable.dart';
-import '../widgets/boton_customizable.dart';
-import '../services/autenticacion_service.dart';
-import '../models/usuario_modelo.dart';
-import '../models/respuesta_api.dart';
-import 'pantalla_inicio.dart';
+import 'package:gfp/screens/sesion/pantalla_crear_usuario.dart';
+import '../../theme/paleta_colores.dart';
+import '../../widgets/campo_texto_customizable.dart';
+import '../../widgets/boton_customizable.dart';
+import '../../services/autenticacion_service.dart';
+import '../../models/usuario_modelo.dart';
+import '../../models/respuesta_api.dart';
+import '../principal/pantalla_inicio.dart';
 
 class PantallaIniciSesion extends StatefulWidget {
   const PantallaIniciSesion({super.key});
@@ -79,7 +80,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                 const SizedBox(height: 20),
                 CampoTextoConIcono(
                   controlador: _nombreController,
-                  texto: "Usuario",
+                  placeholder: "Usuario",
                   icono: Icons.person,
                   validacion: (value) =>
                       value!.isEmpty ? "Ingrese su usuario" : null,
@@ -87,7 +88,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                 const SizedBox(height: 30),
                 CampoTextoConIcono(
                   controlador: _contrasenaController,
-                  texto: "Contraseña",
+                  placeholder: "Contraseña",
                   icono: Icons.lock,
                   esContrasena: true,
                   validacion: (value) =>
@@ -98,7 +99,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PantallaInicio()),
+                            builder: (context) => PantallaCrearUsuario()),
                       );
                     },
                     child: Align(
@@ -107,8 +108,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               decorationColor: ColorAplicacion.blanco,
-                              fontStyle: FontStyle.italic ,
-                              
+                              fontStyle: FontStyle.italic,
                             )))),
                 const SizedBox(height: 40),
                 _cargando

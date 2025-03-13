@@ -7,7 +7,7 @@ class TemaAplicacion {
       primaryColor: ColorAplicacion.primario, // Color principal
       scaffoldBackgroundColor: ColorAplicacion.primario, // Fondo de toda la app
       appBarTheme: const AppBarTheme(
-        backgroundColor: ColorAplicacion.secundario, // Color del AppBar
+        backgroundColor: ColorAplicacion.primario, // Color del AppBar
         foregroundColor: ColorAplicacion.blancoClaro, // Color de los iconos y textos en el AppBar
       ),
       textTheme: const TextTheme(

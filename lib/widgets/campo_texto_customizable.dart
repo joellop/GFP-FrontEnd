@@ -4,7 +4,7 @@ import '../theme/paleta_colores.dart';
 ///Input con icono (inluye para contasena)
 class CampoTextoConIcono extends StatefulWidget {
   final TextEditingController controlador;
-  final String texto;
+  final String placeholder;
   final IconData icono;
   final bool esContrasena;
   final String? Function(String?)? validacion;
@@ -12,7 +12,7 @@ class CampoTextoConIcono extends StatefulWidget {
   const CampoTextoConIcono({
     super.key,
     required this.controlador,
-    required this.texto,
+    required this.placeholder,
     required this.icono,
     this.esContrasena = false,
     this.validacion,
@@ -33,7 +33,7 @@ class CampoTextoConIconoState extends State<CampoTextoConIcono> {
       validator: widget.validacion,
       style: const TextStyle(color: ColorAplicacion.blanco),
       decoration: InputDecoration(
-        hintText: widget.texto,
+        hintText: widget.placeholder,
         hintStyle: const TextStyle(color: ColorAplicacion.blanco, fontSize: 13),
         prefixIcon: Icon(widget.icono, color: ColorAplicacion.blanco),
         filled: true,
