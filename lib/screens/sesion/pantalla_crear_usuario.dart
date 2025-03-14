@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gfp/models/codigo_verificacion.dart';
 import 'package:gfp/models/respuesta_api.dart';
 import 'package:gfp/models/usuario_modelo.dart';
-import 'package:gfp/screens/principal/pantalla_inicio.dart';
+import 'package:gfp/screens/codigos/pantalla_codigo_verificacion.dart';
+import 'package:gfp/services/codigo_verificacion.dart';
 import 'package:gfp/services/usuarios_service.dart';
 import 'package:gfp/utils/mensajes.dart';
 import 'package:gfp/utils/validaciones.dart';
@@ -22,7 +24,8 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contrasenaController = TextEditingController();
-  final UsuariosService _apiService = UsuariosService();
+  final UsuariosService _usuarioService = UsuariosService();
+  final CodigoVerificacionService _codigoService = CodigoVerificacionService();
 
   Future<void> _crearUsuario() async {
     if (!_formKey.currentState!.validate()) return;
@@ -35,19 +38,34 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
       contrasena: _contrasenaController.text,
     );
 
-    final RespuestaAPI<UsuarioModelo> respuesta =
-        await _apiService.crearUsuario(usuario);
+    final RespuestaAPI<UsuarioModelo> respuestaUsuario =
+        await _usuarioService.crearUsuario(usuario);
 
     if (!mounted) return;
 
     setState(() => _cargando = false);
 
-    if (respuesta.exito) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const PantallaInicio()),
-      );
+    if (respuestaUsuario.exito) {
+
+      final RespuestaAPI<CodigoVerificacion> respuestaCodigo =
+          await _codigoService.generarCodigo(respuestaUsuario.dato!.id);
+
+      if (!mounted) return;
+
+      if (respuestaCodigo.exito) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+              builder: (context) => PantallaCodigoVerificacion(
+                  usuario: respuestaUsuario.dato!,
+                  codigo: respuestaCodigo.dato!)),
+        );
+      } else {
+        Mensajes.mostrarMensaje(context, respuestaCodigo.mensaje,
+            color: ColorAplicacion.error);
+      }
+
     } else {
-      Mensajes.mostrarMensaje(context, respuesta.mensaje,
+      Mensajes.mostrarMensaje(context, respuestaUsuario.mensaje,
           color: ColorAplicacion.error);
     }
   }

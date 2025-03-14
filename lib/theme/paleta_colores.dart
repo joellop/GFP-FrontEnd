@@ -7,7 +7,7 @@ class ColorAplicacion {
   static const Color blancoClaro = Color(0xFFE2EAF8); // Azul claro
   static const Color blanco = Color(0xFFFFFFFF); // Blanco
 
-    static const Color exito = Color.fromARGB(255, 65, 221, 17);
-    static const Color advertencia = Color.fromARGB(255, 234, 241, 4);
-    static const Color error = Color.fromARGB(255, 255, 0, 0);
+    static const Color exito = Color.fromARGB(255, 71, 185, 36);
+    static const Color advertencia = Color.fromARGB(255, 216, 219, 22);
+    static const Color error = Color.fromARGB(255, 241, 41, 14);
 }

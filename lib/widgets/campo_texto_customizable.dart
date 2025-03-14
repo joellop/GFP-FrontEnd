@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/paleta_colores.dart';
 
 ///Input con icono (inluye para contasena)
@@ -65,13 +66,16 @@ class CampoTextoSinIcono extends StatelessWidget {
   final TextEditingController controlador;
   final String placeholder;
   final String? Function(String?)? validacion;
+  final bool esNumerico;
+  final bool permitirDecimales;
 
-  const CampoTextoSinIcono({
-    super.key,
-    required this.controlador,
-    required this.placeholder,
-    this.validacion,
-  });
+  const CampoTextoSinIcono(
+      {super.key,
+      required this.controlador,
+      required this.placeholder,
+      this.validacion,
+      this.esNumerico = false,
+      this.permitirDecimales = false});
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +83,17 @@ class CampoTextoSinIcono extends StatelessWidget {
       controller: controlador,
       validator: validacion,
       style: const TextStyle(color: ColorAplicacion.blanco),
+      keyboardType: esNumerico
+          ? TextInputType.numberWithOptions(
+              decimal:
+                  permitirDecimales)
+          : TextInputType.text, 
+      inputFormatters: esNumerico
+          ? [
+              FilteringTextInputFormatter.allow(
+                  RegExp(r'^\d*\.?\d{0,2}')), 
+            ]
+          : null, 
       decoration: InputDecoration(
         hintText: placeholder,
         hintStyle: TextStyle(color: ColorAplicacion.blanco, fontSize: 13),

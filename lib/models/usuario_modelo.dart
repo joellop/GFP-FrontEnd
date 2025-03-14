@@ -26,6 +26,7 @@ class UsuarioModelo {
   Map<String, dynamic> toJson() {
     return {
       "nombre": nombre,
+      "email": email,
       "contrasena": contrasena,
     };
   }

@@ -1,25 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:gfp/utils/conexion_api.dart';
 import '../models/usuario_modelo.dart';
 import '../models/respuesta_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AutenticacionService {
   static const String _tokenKey = 'token';
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: "http://192.168.1.59:3000/", // Cambia esto por tu URL real
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-    ),
-  );
+  final Dio _dio = ConexionApi().dio;
+  final String _url = "${ConexionApi().baseUrl}/autenticacion";
 
-///Inicio de sesion
-Future<RespuestaAPI<UsuarioModelo>> iniciarSesion(UsuarioModelo usuario) async {
+  ///Inicio de sesion
+  Future<RespuestaAPI<UsuarioModelo>> iniciarSesion(
+      UsuarioModelo usuario) async {
     try {
       final response = await _dio.post(
-        "/autenticacion",
+        _url,
         data: usuario.toJson(),
-      ); 
+      );
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
         (data) => UsuarioModelo.fromJson(data),
@@ -33,7 +30,7 @@ Future<RespuestaAPI<UsuarioModelo>> iniciarSesion(UsuarioModelo usuario) async {
     }
   }
 
-    /// Guarda el token en SharedPreferences
+  /// Guarda el token en SharedPreferences
   Future<void> guardarToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
