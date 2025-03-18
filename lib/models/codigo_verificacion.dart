@@ -26,10 +26,14 @@ class CodigoVerificacion {
     );
   }
 
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     "nombre": nombre,
-  //     "contrasena": contrasena,
-  //   };
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "usuarioId": usuarioId,
+      "codigo": codigo,
+      "fechaCreacion": fechaCreacion,
+      "fechaExpiracion": fechaExpiracion,
+      "usado": usado
+    };
+  }
 }

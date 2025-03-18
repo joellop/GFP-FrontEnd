@@ -7,10 +7,10 @@ class CodigoVerificacionService {
   final Dio _dio = ConexionApi().dio;
   final String _url = "${ConexionApi().baseUrl}/codigos-verificacion";
 
-  ///Inicio de sesion
+  ///Genera el codigo de verificación
   Future<RespuestaAPI<CodigoVerificacion>> generarCodigo(int? usuarioId) async {
     try {
-      final response = await _dio.post(
+      final response = await _dio.get(
         "$_url/GenerarCodigo/$usuarioId",
       );
       return RespuestaAPI<CodigoVerificacion>.fromJson(
@@ -23,6 +23,22 @@ class CodigoVerificacionService {
         exito: false,
         mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
       );
+    }
+  }
+
+  Future<RespuestaAPI<String>> verificarCodigo(
+      CodigoVerificacion datoCodigo) async {
+    try {
+      final response =
+          await _dio.post("$_url/VerificarCodigo", data: datoCodigo.toJson());
+
+      return RespuestaAPI<String>.fromJson(
+          response.data, (data) => data as String);
+    } on DioException catch (e) {
+      return RespuestaAPI(
+          dato: null,
+          exito: false,
+          mensaje: e.response?.data["mensaje"] ?? "Error en la petición");
     }
   }
 }

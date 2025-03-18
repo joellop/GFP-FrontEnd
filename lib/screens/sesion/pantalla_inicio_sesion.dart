@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gfp/screens/sesion/pantalla_crear_usuario.dart';
+import 'package:gfp/utils/mensajes.dart';
 import '../../theme/paleta_colores.dart';
 import '../../widgets/campo_texto_customizable.dart';
 import '../../widgets/boton_customizable.dart';
@@ -55,9 +56,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
   }
 
   void _mostrarMensaje(String mensaje) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(mensaje)),
-    );
+    Mensajes.mostrarMensaje(context, mensaje, color: ColorAplicacion.error);
   }
 
   @override

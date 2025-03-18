@@ -31,3 +31,20 @@ class UsuarioModelo {
     };
   }
 }
+
+class CambioContrasena{
+  final String nombreEmail;
+  final String contrasenaNueva;
+
+  CambioContrasena({
+    required this.nombreEmail,
+    required this.contrasenaNueva
+  });
+
+  Map<String, dynamic> toJson(){
+    return{
+      "nombreEmail": nombreEmail,
+      "contrasenaNueva": contrasenaNueva
+    };
+  }
+}

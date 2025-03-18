@@ -7,7 +7,6 @@ class UsuariosService {
   final Dio _dio = ConexionApi().dio;
   final String _url = "${ConexionApi().baseUrl}/usuario";
 
-  ///Inicio de sesion
   Future<RespuestaAPI<UsuarioModelo>> crearUsuario(
       UsuarioModelo usuario) async {
     try {
@@ -15,12 +14,53 @@ class UsuariosService {
         "$_url/crearUsuario",
         data: usuario.toJson(),
       );
+      print(response.data.id);
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
-        (data) => UsuarioModelo.fromJson(data),
+        (data) => UsuarioModelo.fromJson(data)
       );
     } on DioException catch (e) {
       return RespuestaAPI<UsuarioModelo>(
+        dato: null,
+        exito: false,
+        mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
+      );
+    }
+  }
+
+  Future<RespuestaAPI<UsuarioModelo>> actualizarUsuario(
+      UsuarioModelo usuario) async {
+    try {
+      final response = await _dio.put(
+        "$_url/actualizarUsuario",
+        data: usuario.toJson(),
+      );
+      return RespuestaAPI<UsuarioModelo>.fromJson(
+        response.data,
+        (data) => UsuarioModelo.fromJson(data)
+      );
+    } on DioException catch (e) {
+      return RespuestaAPI<UsuarioModelo>(
+        dato: null,
+        exito: false,
+        mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
+      );
+    }
+  }
+
+  Future<RespuestaAPI<int>> actualizarContrasena(
+      CambioContrasena contrasena) async {
+    try {
+      final response = await _dio.put(
+        "$_url/cambiarContrasena",
+        data: contrasena.toJson(),
+      );
+      return RespuestaAPI<int>.fromJson(
+        response.data,
+        (data) => data as int
+      );
+    } on DioException catch (e) {
+      return RespuestaAPI<int>(
         dato: null,
         exito: false,
         mensaje: e.response?.data["mensaje"] ?? "Error en la petición",

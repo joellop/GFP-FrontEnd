@@ -17,6 +17,7 @@ class AutenticacionService {
         _url,
         data: usuario.toJson(),
       );
+      print("Respuesta de api ====> ${response.data}");
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
         (data) => UsuarioModelo.fromJson(data),
