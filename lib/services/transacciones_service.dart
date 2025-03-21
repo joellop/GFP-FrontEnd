@@ -76,16 +76,16 @@ class TransaccionesService {
     }
   }
 
-   Future<RespuestaAPI<void>> eliminarTransaccion(
+   Future<RespuestaAPI<dynamic>> eliminarTransaccion(
       TransaccionDto transaccion) async {
     try {
       final response =
           await _dio.delete("$_url/eliminarTransaccion/${transaccion.id}");
 
-      return RespuestaAPI<void>.fromJson(
-          response.data, (data) => data as Null);
+      return RespuestaAPI<dynamic>.fromJson(
+          response.data, (_) => null);
     } on DioException catch (e) {
-      return RespuestaAPI<void>(
+      return RespuestaAPI<dynamic>(
         dato: null,
         exito: false,
         mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
