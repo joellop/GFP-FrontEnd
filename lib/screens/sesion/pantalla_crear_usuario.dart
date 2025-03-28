@@ -46,24 +46,21 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
     setState(() => _cargando = false);
 
     if (respuestaUsuario.exito) {
-
       final RespuestaAPI<CodigoVerificacion> respuestaCodigo =
           await _codigoService.generarCodigo(respuestaUsuario.dato!.id);
 
       if (!mounted) return;
 
       if (respuestaCodigo.exito) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-              builder: (context) => PantallaCodigoVerificacion(
-                  usuario: respuestaUsuario.dato!,
-                  codigo: respuestaCodigo.dato!)),
-        );
+        Navigator.pushReplacementNamed(context, "/pantallaVerificacionCodigo",
+            arguments: {
+              "usuario": respuestaUsuario.dato!,
+              "codigo": respuestaCodigo.dato!
+            });
       } else {
         Mensajes.mostrarMensaje(context, respuestaCodigo.mensaje,
             color: ColorAplicacion.error);
       }
-
     } else {
       Mensajes.mostrarMensaje(context, respuestaUsuario.mensaje,
           color: ColorAplicacion.error);
