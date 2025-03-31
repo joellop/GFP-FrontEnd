@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gfp/models/codigo_verificacion.dart';
 import 'package:gfp/models/respuesta_api.dart';
 import 'package:gfp/models/usuario_modelo.dart';
-import 'package:gfp/screens/codigos/pantalla_codigo_verificacion.dart';
 import 'package:gfp/services/codigo_verificacion.dart';
 import 'package:gfp/services/usuarios_service.dart';
 import 'package:gfp/utils/mensajes.dart';

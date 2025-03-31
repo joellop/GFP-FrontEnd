@@ -84,16 +84,13 @@ class CampoTextoSinIcono extends StatelessWidget {
       validator: validacion,
       style: const TextStyle(color: ColorAplicacion.blanco),
       keyboardType: esNumerico
-          ? TextInputType.numberWithOptions(
-              decimal:
-                  permitirDecimales)
-          : TextInputType.text, 
+          ? TextInputType.numberWithOptions(decimal: permitirDecimales)
+          : TextInputType.text,
       inputFormatters: esNumerico
           ? [
-              FilteringTextInputFormatter.allow(
-                  RegExp(r'^\d*\.?\d{0,2}')), 
+              FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
             ]
-          : null, 
+          : null,
       decoration: InputDecoration(
         hintText: placeholder,
         hintStyle: TextStyle(color: ColorAplicacion.blanco, fontSize: 13),
@@ -113,13 +110,16 @@ class CampoTextoConTitulo extends StatelessWidget {
   final TextEditingController controlador;
   final String titulo;
   final String? Function(String?)? validacion;
+  final bool esNumerico;
+  final bool permitirDecimales;
 
-  const CampoTextoConTitulo({
-    super.key,
-    required this.controlador,
-    required this.titulo,
-    this.validacion,
-  });
+  const CampoTextoConTitulo(
+      {super.key,
+      required this.controlador,
+      required this.titulo,
+      this.validacion,
+      this.esNumerico = false,
+      this.permitirDecimales = false});
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +140,14 @@ class CampoTextoConTitulo extends StatelessWidget {
           controller: controlador,
           validator: validacion,
           style: const TextStyle(color: ColorAplicacion.blanco),
+          keyboardType: esNumerico
+              ? TextInputType.numberWithOptions(decimal: permitirDecimales)
+              : TextInputType.text,
+          inputFormatters: esNumerico
+              ? [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                ]
+              : null,
           decoration: InputDecoration(
             filled: true,
             fillColor: ColorAplicacion.secundario,
@@ -148,6 +156,82 @@ class CampoTextoConTitulo extends StatelessWidget {
               borderSide: BorderSide.none,
             ), // Espaciado interior
           ),
+        ),
+      ],
+    );
+  }
+}
+
+///Input fecha con titulo
+class CampoFechaConTitulo extends StatefulWidget {
+  final TextEditingController controlador;
+  final String titulo;
+  final String? Function(String?)? validacion;
+
+  const CampoFechaConTitulo({
+    super.key,
+    required this.controlador,
+    required this.titulo,
+    this.validacion,
+  });
+  @override
+  CampoFechaConTituloState createState() => CampoFechaConTituloState();
+}
+
+class CampoFechaConTituloState extends State<CampoFechaConTitulo> {
+  Future<void> _seleccionarFecha() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context, // Ahora sí accede al contexto
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark(), // Personaliza el tema si lo deseas
+          child: child!,
+        );
+      },
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        widget.controlador.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Título del campo de texto
+        Text(
+          widget.titulo,
+          style: TextStyle(
+            fontSize: 13,
+            color: ColorAplicacion.blanco,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        TextFormField(
+          controller: widget.controlador,
+          validator: widget.validacion,
+          readOnly: true, // Hace que el usuario no pueda escribir manualmente
+          style: const TextStyle(color: ColorAplicacion.blanco),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: ColorAplicacion.secundario,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
+            ),
+            suffixIcon:
+                Icon(Icons.calendar_today, color: ColorAplicacion.blanco),
+          ),
+          onTap: _seleccionarFecha,
         ),
       ],
     );
