@@ -118,7 +118,7 @@ class PantallaInicioState extends State<PantallaInicio> {
         return Dialog(
           backgroundColor: ColorAplicacion.primario,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // Bordes redondeados
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
             padding: EdgeInsets.all(16),

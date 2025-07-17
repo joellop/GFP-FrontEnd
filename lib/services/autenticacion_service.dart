@@ -26,7 +26,7 @@ class AutenticacionService {
       return RespuestaAPI<UsuarioModelo>(
         dato: null,
         exito: false,
-        mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
+        mensaje: e.message ?? "Error en la petición",
       );
     }
   }

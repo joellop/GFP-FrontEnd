@@ -39,8 +39,8 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
 
     setState(() => _cargando = false);
 
-    if (true) {
-      // _guardarToken(respuesta.dato!.token ?? "");
+    if (respuesta.exito && respuesta.dato != null) {
+      _guardarToken(respuesta.dato!.token ?? "");
       Navigator.pushReplacementNamed(context, "/pantallaInicio");
     } else {
       _mostrarMensaje(respuesta.mensaje);
