@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/utils/conexion_api.dart';
-import '../models/usuario_modelo.dart';
-import '../models/respuesta_api.dart';
+import 'package:gfp/core/utils/conexion_api.dart';
+import '../../domain/models/usuario_modelo.dart';
+import '../../../../models/respuesta_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AutenticacionService {
@@ -17,7 +17,6 @@ class AutenticacionService {
         _url,
         data: usuario.toJson(),
       );
-      print("Respuesta de api ====> ${response.data}");
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
         (data) => UsuarioModelo.fromJson(data),

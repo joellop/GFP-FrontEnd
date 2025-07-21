@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/theme/paleta_colores.dart';
+import 'package:gfp/core/theme/paleta_colores.dart';
 
 class CuadroSeleccionWidget extends StatelessWidget {
   final String titulo;

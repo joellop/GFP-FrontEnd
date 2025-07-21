@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:gfp/models/categorias_dto.dart';
 import 'package:gfp/models/respuesta_api.dart';
-import 'package:gfp/utils/conexion_api.dart';
+import 'package:gfp/core/utils/conexion_api.dart';
 
 class CategoriasService {
   final Dio _dio = ConexionApi().dio;

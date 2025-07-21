@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/screens/codigos/pantalla_codigo_verificacion.dart';
-import 'package:gfp/screens/principal/pantalla_inicio.dart';
-import 'package:gfp/screens/sesion/pantalla_crear_usuario.dart';
-import 'package:gfp/screens/sesion/pantalla_inicio_sesion.dart';
-import 'package:gfp/services/autenticacion_service.dart';
+import 'package:gfp/features/auth/application/providers/autenticacion_provider.dart';
+import 'package:gfp/features/auth/application/providers/codigo_verificacion_provider.dart';
+import 'package:gfp/features/auth/application/providers/usuario_provider.dart';
+import 'package:gfp/features/auth/presentation/screens/pantalla_codigo_verificacion.dart';
+import 'package:gfp/features/home/presentation/screens/pantalla_inicio.dart';
+import 'package:gfp/features/auth/presentation/screens/pantalla_crear_usuario.dart';
+import 'package:gfp/features/auth/presentation/screens/pantalla_inicio_sesion.dart';
+import 'package:gfp/features/auth/data/services/autenticacion_service.dart';
+import 'package:provider/provider.dart';
 import 'screens/pantalla_presentacion.dart';
-import 'theme/tema.dart';
+import 'core/theme/tema.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AutenticacionProvider()),
+        ChangeNotifierProvider(create: (_) => UsuarioProvider()),
+        ChangeNotifierProvider(create: (_) => CodigoVerificacionProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

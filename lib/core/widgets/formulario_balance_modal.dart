@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/theme/paleta_colores.dart';
-import 'package:gfp/widgets/campo_texto_customizable.dart';
+import 'package:gfp/core/theme/paleta_colores.dart';
+import 'package:gfp/core/widgets/campo_texto_customizable.dart';
 
 class FormularioBalanceModal extends StatefulWidget {
   @override

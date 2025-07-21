@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/services/autenticacion_service.dart';
-import 'package:gfp/theme/paleta_colores.dart';
+import 'package:gfp/features/auth/data/services/autenticacion_service.dart';
+import 'package:gfp/core/theme/paleta_colores.dart';
 
 class MenuLateral extends StatelessWidget {
   final AutenticacionService _apiService = AutenticacionService();

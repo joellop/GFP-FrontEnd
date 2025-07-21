@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/models/email_dto.dart';
+import 'package:gfp/features/auth/domain/models/email_dto.dart';
 import 'package:gfp/models/respuesta_api.dart';
-import 'package:gfp/utils/conexion_api.dart';
+import 'package:gfp/core/utils/conexion_api.dart';
 
 class EmailService {
   final Dio _dio = ConexionApi().dio;

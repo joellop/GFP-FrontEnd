@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/utils/conexion_api.dart';
-import '../models/usuario_modelo.dart';
-import '../models/respuesta_api.dart';
+import 'package:gfp/core/utils/conexion_api.dart';
+import '../../domain/models/usuario_modelo.dart';
+import '../../../../models/respuesta_api.dart';
 
 class UsuariosService {
   final Dio _dio = ConexionApi().dio;
@@ -14,7 +14,6 @@ class UsuariosService {
         "$_url/crearUsuario",
         data: usuario.toJson(),
       );
-      print(response.data.id);
       return RespuestaAPI<UsuarioModelo>.fromJson(
         response.data,
         (data) => UsuarioModelo.fromJson(data)

@@ -9,11 +9,24 @@ class RespuestaAPI<T> {
     required this.mensaje,
   });
 
-  factory RespuestaAPI.fromJson(Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJsonT) {
+  /// Factory para un solo objeto o tipo primitivo (String, int, Modelos, etc.)
+  factory RespuestaAPI.fromJson(
+    Map<String, dynamic> json,
+    T Function(dynamic) fromJsonT,
+  ) {
     return RespuestaAPI<T>(
-      dato: json["dato"] != null ? fromJsonT(json["dato"]) : null,
-      exito: json["exito"] ?? false,
-      mensaje: json["mensaje"] ?? "",
+      dato: json['dato'] != null ? fromJsonT(json['dato']) : null,
+      exito: json['exito'] ?? false,
+      mensaje: json['mensaje'] ?? '',
     );
+  }
+
+  /// Para serializar (si lo necesitas)
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) {
+    return {
+      'dato': dato != null ? toJsonT(dato as T) : null,
+      'exito': exito,
+      'mensaje': mensaje,
+    };
   }
 }

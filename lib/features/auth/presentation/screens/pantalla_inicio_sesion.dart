@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/utils/mensajes.dart';
-import '../../theme/paleta_colores.dart';
-import '../../widgets/campo_texto_customizable.dart';
-import '../../widgets/boton_customizable.dart';
-import '../../services/autenticacion_service.dart';
-import '../../models/usuario_modelo.dart';
-import '../../models/respuesta_api.dart';
+import 'package:gfp/core/utils/mensajes.dart';
+import 'package:gfp/features/auth/application/providers/autenticacion_provider.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/theme/paleta_colores.dart';
+import '../../../../core/widgets/campo_texto_customizable.dart';
+import '../../../../core/widgets/boton_customizable.dart';
 
 class PantallaIniciSesion extends StatefulWidget {
   const PantallaIniciSesion({super.key});
@@ -18,45 +17,31 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _contrasenaController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final AutenticacionService _apiService = AutenticacionService();
 
-  bool _cargando = false;
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _cargando = true);
+   final authProvider = context.read<AutenticacionProvider>();
 
-    final usuario = UsuarioModelo(
-      nombre: _nombreController.text,
-      contrasena: _contrasenaController.text,
+    final respuesta = await authProvider.iniciarSesion(
+      _nombreController.text,
+      _contrasenaController.text,
     );
-
-    final RespuestaAPI<UsuarioModelo> respuesta =
-        await _apiService.iniciarSesion(usuario);
 
     if (!mounted) return;
 
-    setState(() => _cargando = false);
-
     if (respuesta.exito && respuesta.dato != null) {
-      _guardarToken(respuesta.dato!.token ?? "");
       Navigator.pushReplacementNamed(context, "/pantallaInicio");
     } else {
-      _mostrarMensaje(respuesta.mensaje);
+      Mensajes.mostrarMensaje(context, respuesta.mensaje, color: ColorAplicacion.error);
     }
-  }
-
-  void _guardarToken(String token) async {
-    await _apiService.guardarToken(token);
-  }
-
-  void _mostrarMensaje(String mensaje) {
-    Mensajes.mostrarMensaje(context, mensaje, color: ColorAplicacion.error);
   }
 
   @override
   Widget build(BuildContext context) {
+    final cargando = context.watch<AutenticacionProvider>().cargando;
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -87,7 +72,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                   icono: Icons.lock,
                   esContrasena: true,
                   validacion: (value) =>
-                      value!.isEmpty ? "Ingrese su contras" : null,
+                      value!.isEmpty ? "Ingrese su contraseña" : null,
                 ),
                 GestureDetector(
                     onTap: () {
@@ -95,14 +80,14 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                     },
                     child: Align(
                         alignment: Alignment.centerRight,
-                        child: const Text("¿Crear usuario?",
+                        child: const Text("Crear usuario",
                             style: TextStyle(
                               decoration: TextDecoration.underline,
                               decorationColor: ColorAplicacion.blanco,
                               fontStyle: FontStyle.italic,
                             )))),
                 const SizedBox(height: 40),
-                _cargando
+                cargando
                     ? const Center(
                         child: CircularProgressIndicator(
                             color: ColorAplicacion.blanco))

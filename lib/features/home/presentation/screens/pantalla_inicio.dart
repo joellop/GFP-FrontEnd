@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/theme/paleta_colores.dart';
-import 'package:gfp/widgets/cuadro_seleccion_fecha.dart';
-import 'package:gfp/widgets/formulario_balance_modal.dart';
-import 'package:gfp/widgets/menu_lateral.dart';
+import 'package:gfp/core/theme/paleta_colores.dart';
+import 'package:gfp/core/widgets/cuadro_seleccion_fecha.dart';
+import 'package:gfp/core/widgets/formulario_balance_modal.dart';
+import 'package:gfp/core/widgets/menu_lateral.dart';
 
 class PantallaInicio extends StatefulWidget {
   const PantallaInicio({super.key});

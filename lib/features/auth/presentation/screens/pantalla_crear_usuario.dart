@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:gfp/models/codigo_verificacion.dart';
+import 'package:gfp/features/auth/application/providers/codigo_verificacion_provider.dart';
+import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
 import 'package:gfp/models/respuesta_api.dart';
-import 'package:gfp/models/usuario_modelo.dart';
-import 'package:gfp/services/codigo_verificacion.dart';
-import 'package:gfp/services/usuarios_service.dart';
-import 'package:gfp/utils/mensajes.dart';
-import 'package:gfp/utils/validaciones.dart';
-import 'package:gfp/widgets/boton_customizable.dart';
-import '../../widgets/campo_texto_customizable.dart';
-import '../../theme/paleta_colores.dart';
+import 'package:gfp/features/auth/domain/models/usuario_modelo.dart';
+import 'package:gfp/core/utils/mensajes.dart';
+import 'package:gfp/core/utils/validaciones.dart';
+import 'package:gfp/core/widgets/boton_customizable.dart';
+import '../../../../core/widgets/campo_texto_customizable.dart';
+import '../../../../core/theme/paleta_colores.dart';
+import 'package:provider/provider.dart';
+import 'package:gfp/features/auth/application/providers/usuario_provider.dart';
 
 class PantallaCrearUsuario extends StatefulWidget {
   const PantallaCrearUsuario({super.key});
@@ -18,18 +19,16 @@ class PantallaCrearUsuario extends StatefulWidget {
 }
 
 class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
-  bool _cargando = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _contrasenaController = TextEditingController();
-  final UsuariosService _usuarioService = UsuariosService();
-  final CodigoVerificacionService _codigoService = CodigoVerificacionService();
 
   Future<void> _crearUsuario() async {
     if (!_formKey.currentState!.validate()) return;
 
-    setState(() => _cargando = true);
+    final usuarioProvider = context.read<UsuarioProvider>();
+    final codigoProvider = context.read<CodigoVerificacionProvider>();
 
     final usuario = UsuarioModelo(
       nombre: _nombreController.text,
@@ -37,24 +36,21 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
       contrasena: _contrasenaController.text,
     );
 
-    final RespuestaAPI<UsuarioModelo> respuestaUsuario =
-        await _usuarioService.crearUsuario(usuario);
+    final respuestaUsuario = await usuarioProvider.crearUsuario(usuario);
 
     if (!mounted) return;
 
-    setState(() => _cargando = false);
-
     if (respuestaUsuario.exito) {
-      final RespuestaAPI<CodigoVerificacion> respuestaCodigo =
-          await _codigoService.generarCodigo(respuestaUsuario.dato!.id);
+      final RespuestaAPI<String> respuestaCodigo =
+          await codigoProvider.generarCodigo(respuestaUsuario.dato!.id);
 
       if (!mounted) return;
 
       if (respuestaCodigo.exito) {
         Navigator.pushReplacementNamed(context, "/pantallaVerificacionCodigo",
             arguments: {
-              "usuario": respuestaUsuario.dato!,
-              "codigo": respuestaCodigo.dato!
+              "usuario": respuestaUsuario.dato,
+              "codigo": respuestaCodigo.dato
             });
       } else {
         Mensajes.mostrarMensaje(context, respuestaCodigo.mensaje,
@@ -68,6 +64,7 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
 
   @override
   Widget build(BuildContext context) {
+    final cargando = context.watch<UsuarioProvider>().cargando;
     return Scaffold(
       body: Center(
         child: Padding(
@@ -127,7 +124,7 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
                   const SizedBox(
                     height: 40.0,
                   ),
-                  _cargando
+                  cargando
                       ? const Center(
                           child: CircularProgressIndicator(
                               color: ColorAplicacion.blanco))

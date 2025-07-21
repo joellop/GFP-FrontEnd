@@ -1,24 +1,24 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/models/codigo_verificacion.dart';
-import 'package:gfp/utils/conexion_api.dart';
-import '../models/respuesta_api.dart';
+import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
+import 'package:gfp/core/utils/conexion_api.dart';
+import '../../../../models/respuesta_api.dart';
 
 class CodigoVerificacionService {
   final Dio _dio = ConexionApi().dio;
   final String _url = "${ConexionApi().baseUrl}/codigos-verificacion";
 
   ///Genera el codigo de verificación
-  Future<RespuestaAPI<CodigoVerificacion>> generarCodigo(int? usuarioId) async {
+  Future<RespuestaAPI<String>> generarCodigo(int? usuarioId) async {
     try {
       final response = await _dio.get(
         "$_url/GenerarCodigo/$usuarioId",
       );
-      return RespuestaAPI<CodigoVerificacion>.fromJson(
+      return RespuestaAPI<String>.fromJson(
         response.data,
-        (data) => CodigoVerificacion.fromJson(data),
+        (data) => data.toString(),
       );
     } on DioException catch (e) {
-      return RespuestaAPI<CodigoVerificacion>(
+      return RespuestaAPI<String>(
         dato: null,
         exito: false,
         mensaje: e.response?.data["mensaje"] ?? "Error en la petición",
