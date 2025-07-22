@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/models/reglas_porcentuales_dto.dart';
+import 'package:gfp/features/reglas/domain/models/reglas_porcentuales_dto.dart';
 import 'package:gfp/core/utils/conexion_api.dart';
-import '../models/respuesta_api.dart';
+import '../../../../shared/models/respuesta_api.dart';
 
 class ReglasPorcentualesService {
   final Dio _dio = ConexionApi().dio;

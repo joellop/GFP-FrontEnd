@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gfp/core/routes/app_routes.dart';
 import 'package:gfp/features/auth/application/providers/autenticacion_provider.dart';
 import 'package:gfp/features/auth/application/providers/codigo_verificacion_provider.dart';
 import 'package:gfp/features/auth/application/providers/usuario_provider.dart';
 import 'package:gfp/features/auth/presentation/screens/pantalla_codigo_verificacion.dart';
+import 'package:gfp/features/home/application/providers/inicio_provider.dart';
 import 'package:gfp/features/home/presentation/screens/pantalla_inicio.dart';
 import 'package:gfp/features/auth/presentation/screens/pantalla_crear_usuario.dart';
 import 'package:gfp/features/auth/presentation/screens/pantalla_inicio_sesion.dart';
 import 'package:gfp/features/auth/data/services/autenticacion_service.dart';
 import 'package:provider/provider.dart';
-import 'screens/pantalla_presentacion.dart';
+import 'features/presentacion/global/splash/pantalla_presentacion.dart';
 import 'core/theme/tema.dart';
 
 void main() {
@@ -18,6 +20,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AutenticacionProvider()),
         ChangeNotifierProvider(create: (_) => UsuarioProvider()),
         ChangeNotifierProvider(create: (_) => CodigoVerificacionProvider()),
+        ChangeNotifierProvider(create: (_) => InicioProvider()),
       ],
       child: MyApp(),
     ),
@@ -34,12 +37,12 @@ class MyApp extends StatelessWidget {
       title: "GFP App",
       theme: TemaAplicacion.temaGlobal,
       routes: {
-        "/pantallaInicio": (context) => const PantallaInicio(),
-        "/pantallaInicioSesion": (context) => const PantallaIniciSesion(),
-        "/pantallaCrearUsuario": (context) => const PantallaCrearUsuario(),
+        AppRoutes.inicio: (context) => const PantallaInicio(),
+        AppRoutes.login: (context) => const PantallaIniciSesion(),
+        AppRoutes.registro: (context) => const PantallaCrearUsuario(),
       },
       onGenerateRoute: (settings) {
-        if (settings.name == "/pantallaVerificacionCodigo") {
+        if (settings.name == AppRoutes.verificacion) {
           final args = settings.arguments as Map<String, dynamic>;
           return MaterialPageRoute(
             builder: (context) => PantallaCodigoVerificacion(

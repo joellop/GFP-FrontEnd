@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
 import 'package:gfp/core/utils/conexion_api.dart';
-import '../../../../models/respuesta_api.dart';
+import '../../../../shared/models/respuesta_api.dart';
 
 class CodigoVerificacionService {
   final Dio _dio = ConexionApi().dio;

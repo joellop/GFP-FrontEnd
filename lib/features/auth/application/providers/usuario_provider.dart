@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gfp/features/auth/data/services/usuarios_service.dart';
 import 'package:gfp/features/auth/domain/models/usuario_modelo.dart';
-import 'package:gfp/models/respuesta_api.dart';
+import 'package:gfp/shared/models/respuesta_api.dart';
 
 class UsuarioProvider with ChangeNotifier {
   final UsuariosService _usuariosService = UsuariosService();

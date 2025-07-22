@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:gfp/features/auth/domain/models/email_dto.dart';
-import 'package:gfp/models/respuesta_api.dart';
+import 'package:gfp/shared/models/respuesta_api.dart';
 import 'package:gfp/core/utils/conexion_api.dart';
 
 class EmailService {

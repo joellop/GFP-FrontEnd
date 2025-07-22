@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/models/categorias_dto.dart';
-import 'package:gfp/models/respuesta_api.dart';
+import 'package:gfp/features/category/domain/models/categorias_dto.dart';
+import 'package:gfp/shared/models/respuesta_api.dart';
 import 'package:gfp/core/utils/conexion_api.dart';
 
 class CategoriasService {

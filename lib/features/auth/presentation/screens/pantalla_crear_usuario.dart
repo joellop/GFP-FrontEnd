@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gfp/core/routes/app_routes.dart';
 import 'package:gfp/features/auth/application/providers/codigo_verificacion_provider.dart';
-import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
-import 'package:gfp/models/respuesta_api.dart';
+import 'package:gfp/shared/models/respuesta_api.dart';
 import 'package:gfp/features/auth/domain/models/usuario_modelo.dart';
 import 'package:gfp/core/utils/mensajes.dart';
 import 'package:gfp/core/utils/validaciones.dart';
@@ -47,7 +47,7 @@ class PantallaCrearUsuarioState extends State<PantallaCrearUsuario> {
       if (!mounted) return;
 
       if (respuestaCodigo.exito) {
-        Navigator.pushReplacementNamed(context, "/pantallaVerificacionCodigo",
+        Navigator.pushReplacementNamed(context, AppRoutes.verificacion,
             arguments: {
               "usuario": respuestaUsuario.dato,
               "codigo": respuestaCodigo.dato

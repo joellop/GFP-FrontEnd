@@ -3,7 +3,7 @@ import 'package:gfp/features/auth/data/services/email_service.dart';
 import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
 import 'package:gfp/features/auth/data/services/codigo_verificacion_service.dart';
 import 'package:gfp/features/auth/domain/models/email_dto.dart';
-import 'package:gfp/models/respuesta_api.dart';
+import 'package:gfp/shared/models/respuesta_api.dart';
 
 class CodigoVerificacionProvider extends ChangeNotifier {
   final CodigoVerificacionService _codigoService = CodigoVerificacionService();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gfp/core/routes/app_routes.dart';
 import 'package:gfp/core/utils/mensajes.dart';
 import 'package:gfp/features/auth/application/providers/autenticacion_provider.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
     if (!mounted) return;
 
     if (respuesta.exito && respuesta.dato != null) {
-      Navigator.pushReplacementNamed(context, "/pantallaInicio");
+      Navigator.pushReplacementNamed(context,  AppRoutes.inicio);
     } else {
       Mensajes.mostrarMensaje(context, respuesta.mensaje, color: ColorAplicacion.error);
     }
@@ -76,7 +77,7 @@ class PantallaIniciSesionState extends State<PantallaIniciSesion> {
                 ),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, "/pantallaCrearUsuario");
+                      Navigator.pushReplacementNamed(context,  AppRoutes.registro);
                     },
                     child: Align(
                         alignment: Alignment.centerRight,
