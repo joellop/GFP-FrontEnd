@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gfp/core/theme/paleta_colores.dart';
 import 'package:gfp/core/widgets/cuadro_seleccion_fecha.dart';
+import 'package:gfp/core/widgets/footer_boton_agregar.dart';
 import 'package:gfp/core/widgets/formulario_balance_modal.dart';
 import 'package:gfp/core/widgets/menu_lateral.dart';
 import 'package:gfp/features/home/application/providers/inicio_provider.dart';
@@ -14,7 +15,7 @@ class PantallaInicio extends StatefulWidget {
 }
 
 class PantallaInicioState extends State<PantallaInicio> {
-  // **Selecciona un mes**
+  //* Selecciona un mes
   void _seleccionarMes(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: ColorAplicacion.secundario,
@@ -57,7 +58,7 @@ class PantallaInicioState extends State<PantallaInicio> {
     );
   }
 
-  // **Selecciona un año**
+  //* Selecciona un año
   void _seleccionarAnio(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -99,7 +100,7 @@ class PantallaInicioState extends State<PantallaInicio> {
     );
   }
 
-  //**Mostrar el formulario de agregar balance**
+  //* Mostrar el formulario de agregar balance
   void _mostrarFormulario(BuildContext context) {
     showDialog(
       context: context,
@@ -523,6 +524,11 @@ class PantallaInicioState extends State<PantallaInicio> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: FooterBotonAgregar(
+        onTap: () {
+          _mostrarFormulario(context);
+        },
       ),
     );
   }
