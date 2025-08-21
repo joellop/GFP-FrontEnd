@@ -4,7 +4,7 @@ import 'package:gfp/features/auth/data/services/autenticacion_service.dart';
 class ConexionApi {
   static final ConexionApi _instancia = ConexionApi._interno();
   final Dio dio;
-  final String baseUrl = "http://192.168.1.25:3000";
+  final String baseUrl = "http://192.168.1.15:3000";
 
   factory ConexionApi() {
     return _instancia;

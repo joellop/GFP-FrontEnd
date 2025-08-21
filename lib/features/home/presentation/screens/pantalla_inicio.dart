@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gfp/core/theme/paleta_colores.dart';
 import 'package:gfp/core/widgets/cuadro_seleccion_fecha.dart';
 import 'package:gfp/core/widgets/footer_boton_agregar.dart';
+import 'package:gfp/core/widgets/formulario_agregar_transaccion.dart';
 import 'package:gfp/core/widgets/formulario_balance_modal.dart';
 import 'package:gfp/core/widgets/menu_lateral.dart';
 import 'package:gfp/features/home/application/providers/inicio_provider.dart';
@@ -101,7 +102,7 @@ class PantallaInicioState extends State<PantallaInicio> {
   }
 
   //* Mostrar el formulario de agregar balance
-  void _mostrarFormulario(BuildContext context) {
+  void _mostrarFormularioBalance(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
@@ -118,7 +119,24 @@ class PantallaInicioState extends State<PantallaInicio> {
       },
     );
   }
-
+//* Mostrar el formulario de agregar balance
+  void _mostrarFormularioTransaccion(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: ColorAplicacion.primario,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: FormularioAgregarTransaccionModal(),
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final inicioProvider = context.watch<InicioProvider>();
@@ -155,7 +173,7 @@ class PantallaInicioState extends State<PantallaInicio> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    _mostrarFormulario(context);
+                    _mostrarFormularioBalance(context);
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: ColorAplicacion.celeste,
@@ -527,7 +545,7 @@ class PantallaInicioState extends State<PantallaInicio> {
       ),
       bottomNavigationBar: FooterBotonAgregar(
         onTap: () {
-          _mostrarFormulario(context);
+          _mostrarFormularioTransaccion(context);
         },
       ),
     );

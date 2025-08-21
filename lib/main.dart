@@ -4,6 +4,8 @@ import 'package:gfp/features/auth/application/providers/autenticacion_provider.d
 import 'package:gfp/features/auth/application/providers/codigo_verificacion_provider.dart';
 import 'package:gfp/features/auth/application/providers/usuario_provider.dart';
 import 'package:gfp/features/auth/presentation/screens/pantalla_codigo_verificacion.dart';
+import 'package:gfp/features/category/application/providers/categoria_provider.dart';
+import 'package:gfp/features/category/presentation/screens/pantalla_categorias.dart';
 import 'package:gfp/features/home/application/providers/inicio_provider.dart';
 import 'package:gfp/features/home/presentation/screens/pantalla_inicio.dart';
 import 'package:gfp/features/auth/presentation/screens/pantalla_crear_usuario.dart';
@@ -21,6 +23,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => UsuarioProvider()),
         ChangeNotifierProvider(create: (_) => CodigoVerificacionProvider()),
         ChangeNotifierProvider(create: (_) => InicioProvider()),
+        ChangeNotifierProvider(create: (_) => CategoriaProvider()),
       ],
       child: MyApp(),
     ),
@@ -40,6 +43,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.inicio: (context) => const PantallaInicio(),
         AppRoutes.login: (context) => const PantallaIniciSesion(),
         AppRoutes.registro: (context) => const PantallaCrearUsuario(),
+        AppRoutes.categorias: (context) => const PantallaCategorias(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == AppRoutes.verificacion) {

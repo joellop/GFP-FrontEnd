@@ -42,7 +42,7 @@ class MenuLateral extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, "/configuracion");
+                Navigator.pushReplacementNamed(context, AppRoutes.categorias);
               },
             ),
             ListTile(
