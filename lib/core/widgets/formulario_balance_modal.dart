@@ -23,17 +23,15 @@ class FormularioModalState extends State<FormularioBalanceModal> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                   style: ElevatedButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                       backgroundColor: ColorAplicacion.celeste),
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon:
-                      Icon(Icons.close, color: ColorAplicacion.blanco),
+                  icon: Icon(Icons.close, color: ColorAplicacion.blanco),
                   iconSize: 15,
                 ),
               ],
@@ -68,8 +66,7 @@ class FormularioModalState extends State<FormularioBalanceModal> {
             ),
             SizedBox(height: 24),
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
