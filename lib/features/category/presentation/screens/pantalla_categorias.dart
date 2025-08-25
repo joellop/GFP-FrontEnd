@@ -3,6 +3,8 @@ import 'package:gfp/core/theme/paleta_colores.dart';
 import 'package:gfp/core/widgets/footer_boton_agregar.dart';
 import 'package:gfp/core/widgets/formulario_agregar_categoria.dart';
 import 'package:gfp/core/widgets/menu_lateral.dart';
+import 'package:gfp/features/category/domain/models/categorias_dto.dart';
+import 'package:gfp/shared/utils/color_utils.dart';
 
 class PantallaCategorias extends StatefulWidget {
   const PantallaCategorias({super.key});
@@ -11,43 +13,28 @@ class PantallaCategorias extends StatefulWidget {
   State<PantallaCategorias> createState() => _PantallaCategoriasState();
 }
 
-// 🔹 Modelo simple de categoría
-class Categoria {
-  final String id;
-  final String nombre;
-  final Color color;
-
-  Categoria({
-    required this.id,
-    required this.nombre,
-    required this.color,
-  });
-}
-
 class _PantallaCategoriasState extends State<PantallaCategorias> {
   // 🔹 Lista local de categorías con colores
-  final List<Categoria> _categorias = [
-    Categoria(id: "1", nombre: "Alimentos", color: Colors.orange),
-    Categoria(id: "2", nombre: "Transporte", color: Colors.blue),
-    Categoria(id: "3", nombre: "Entretenimiento", color: Colors.purple),
-    Categoria(id: "4", nombre: "Salud", color: Colors.green),
-    Categoria(id: "5", nombre: "Educación", color: Colors.teal),
-    Categoria(id: "6", nombre: "Deportes", color: Colors.red),
-    Categoria(id: "7", nombre: "Viajes", color: Colors.indigo),
-    Categoria(id: "8", nombre: "Otros", color: Colors.grey),
-    Categoria(id: "9", nombre: "Otros", color: Colors.grey),
-    Categoria(id: "10", nombre: "Otros", color: Colors.purple),
-    Categoria(id: "11", nombre: "Otros", color: Colors.green),
-    Categoria(id: "12", nombre: "Otros", color: Colors.blue),
-    Categoria(id: "13", nombre: "Otros", color: Colors.greenAccent),
-    Categoria(id: "14", nombre: "Otros", color: Colors.cyanAccent),
-    Categoria(id: "15", nombre: "Otros", color: Colors.limeAccent),
-    Categoria(id: "16", nombre: "Otros", color: Colors.teal),
-    Categoria(id: "17", nombre: "Otros", color: Colors.brown),
+  final List<CategoriasDto> _categorias = [
+    CategoriasDto(
+        id: 1, usuarioId: 1, nombre: "Alimentos", color: "#F44336"), // rojo
+    CategoriasDto(
+        id: 2, usuarioId: 1, nombre: "Transporte", color: "#0000FF"), // azul
+    CategoriasDto(
+        id: 3,
+        usuarioId: 1,
+        nombre: "Entretenimiento",
+        color: "#FFEB3B"), // amarillo
+    CategoriasDto(
+        id: 4, usuarioId: 1, nombre: "Salud", color: "#008000"), // verde
+    CategoriasDto(
+        id: 5, usuarioId: 1, nombre: "Educación", color: "#008080"), // teal
   ];
-    //* Mostrar el formulario de agregar balance
-  void _mostrarFormularioBalance(BuildContext context) {
-    showDialog(
+
+//* Mostrar el formulario de agregar/editar categoría
+  void _mostrarFormularioCategoria(BuildContext context,
+      {CategoriasDto? categoria, int? index}) async {
+    final result = await showDialog<CategoriasDto>(
       context: context,
       builder: (context) {
         return Dialog(
@@ -56,12 +43,25 @@ class _PantallaCategoriasState extends State<PantallaCategorias> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: EdgeInsets.all(16),
-            child: FormularioAgregarCategoria(),
+            padding: const EdgeInsets.all(16),
+            child: FormularioAgregarCategoria(
+                categoria: categoria), // 🔹 si es editar, se precarga
           ),
         );
       },
     );
+
+    if (result != null) {
+      setState(() {
+        if (index != null) {
+          // 🔹 editar
+          _categorias[index] = result;
+        } else {
+          // 🔹 agregar
+          _categorias.add(result);
+        }
+      });
+    }
   }
 
   @override
@@ -84,7 +84,7 @@ class _PantallaCategoriasState extends State<PantallaCategorias> {
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // 👈 2 columnas
+                  crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
                   childAspectRatio: 3 / 1,
@@ -92,32 +92,56 @@ class _PantallaCategoriasState extends State<PantallaCategorias> {
                 itemCount: _categorias.length,
                 itemBuilder: (context, index) {
                   final categoria = _categorias[index];
-                  return Card(
-                    color: categoria.color,
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          categoria.nombre,
-                          style: const TextStyle(fontSize: 18),
-                          textAlign: TextAlign.center,
+                  return InkWell(
+                    onTap: () {
+                      _mostrarFormularioCategoria(context,
+                          categoria: categoria, index: index); // 🔹 editar
+                    },
+                    borderRadius: BorderRadius.circular(12),
+                    child: Card(
+                      color: hexAColor(categoria.color),
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            categoria.nombre,
+                            style: const TextStyle(fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
                   );
+                  // return Card(
+                  //   color: hexToColor(categoria.color),
+                  //   elevation: 2,
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(12),
+                  //   ),
+                  //   child: Center(
+                  //     child: Padding(
+                  //       padding: const EdgeInsets.all(12.0),
+                  //       child: Text(
+                  //         categoria.nombre,
+                  //         style: const TextStyle(fontSize: 18),
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // );
                 },
               ),
             ),
           ],
         ),
       ),
-            bottomNavigationBar: FooterBotonAgregar(
+      bottomNavigationBar: FooterBotonAgregar(
         onTap: () {
-          _mostrarFormularioBalance(context);
+          _mostrarFormularioCategoria(context);
         },
       ),
     );

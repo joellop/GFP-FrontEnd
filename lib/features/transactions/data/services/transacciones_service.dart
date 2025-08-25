@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:gfp/features/transactions/domain/models/transaccion_dto.dart';
-import 'package:gfp/core/utils/conexion_api.dart';
+import 'package:gfp/core/network/conexion_api.dart';
 import '../../../../shared/models/respuesta_api.dart';
 
 class TransaccionesService {

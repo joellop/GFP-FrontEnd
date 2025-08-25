@@ -5,7 +5,7 @@ import 'package:gfp/features/auth/domain/models/codigo_verificacion.dart';
 import 'package:gfp/features/auth/domain/models/email_dto.dart';
 import 'package:gfp/features/auth/domain/models/usuario_modelo.dart';
 import 'package:gfp/core/theme/paleta_colores.dart';
-import 'package:gfp/core/utils/mensajes.dart';
+import 'package:gfp/shared/utils/mensajes.dart';
 import 'package:gfp/core/widgets/boton_customizable.dart';
 import 'package:gfp/core/widgets/campo_texto_customizable.dart';
 import 'package:provider/provider.dart';

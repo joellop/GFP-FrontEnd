@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gfp/core/theme/paleta_colores.dart';
 import 'package:gfp/core/widgets/campo_texto_customizable.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gfp/features/category/domain/models/categorias_dto.dart';
+import 'package:gfp/shared/utils/color_utils.dart';
 
 class FormularioAgregarCategoria extends StatefulWidget {
-  const FormularioAgregarCategoria({super.key});
+  final CategoriasDto? categoria;
+  const FormularioAgregarCategoria({super.key, this.categoria});
 
   @override
   State<FormularioAgregarCategoria> createState() =>
@@ -17,6 +20,15 @@ class _FormularioAgregarCategoriaState
   final TextEditingController tituloController = TextEditingController();
   // Color seleccionado por el usuario
   Color _colorSeleccionado = Colors.blue; // Valor inicial
+  @override
+  void initState() {
+    super.initState();
+    // 🔹 Si viene una categoría, precargar sus datos
+    if (widget.categoria != null) {
+      tituloController.text = widget.categoria!.nombre;
+      _colorSeleccionado = hexAColor(widget.categoria!.color);
+    }
+  }
 
   void _abrirSelectorColor() {
     showDialog(
@@ -28,9 +40,10 @@ class _FormularioAgregarCategoriaState
             child: BlockPicker(
               pickerColor: _colorSeleccionado,
               onColorChanged: (color) {
-                setState(() {
-                  _colorSeleccionado = color;
-                });
+                print(colorAHex(color));
+                // setState(() {
+                //   _colorSeleccionado = color;
+                // });
               },
             ),
           ),
@@ -69,7 +82,9 @@ class _FormularioAgregarCategoriaState
             ),
             SizedBox(height: 16),
             Text(
-              "AGREGAR CATEGORÍA",
+              widget.categoria == null
+                  ? "AGREGAR CATEGORÍA"
+                  : "EDITAR CATEGORÍA",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
@@ -120,7 +135,7 @@ class _FormularioAgregarCategoriaState
                     }
                   },
                   child: Text(
-                    "Agregar",
+                    widget.categoria == null ? "Agregar" : "Guardar",
                     style: TextStyle(color: ColorAplicacion.blanco),
                   ),
                 ),

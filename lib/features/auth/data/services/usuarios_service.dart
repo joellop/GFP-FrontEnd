@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:gfp/core/utils/conexion_api.dart';
+import 'package:gfp/core/network/conexion_api.dart';
 import '../../domain/models/usuario_modelo.dart';
 import '../../../../shared/models/respuesta_api.dart';
 

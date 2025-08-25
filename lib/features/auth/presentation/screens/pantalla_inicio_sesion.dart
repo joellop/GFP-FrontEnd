@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gfp/core/routes/app_routes.dart';
-import 'package:gfp/core/utils/mensajes.dart';
+import 'package:gfp/shared/utils/mensajes.dart';
 import 'package:gfp/features/auth/application/providers/autenticacion_provider.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/paleta_colores.dart';
